@@ -68,6 +68,8 @@ class ProductModel(models.Model):
             return self.get_price_discounted()
         else:
             return self.price
+    def get_categories(self):
+        return ", ".join([category.name for category in self.category.all()])
         
 class ProductImages(models.Model):
     product = models.ForeignKey(ProductModel,on_delete=models.CASCADE,verbose_name=_('product'),related_name='images')
