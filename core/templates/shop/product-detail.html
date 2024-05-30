@@ -1,6 +1,6 @@
-{% extends 'base.html' %}
+{% extends '_base.html' %}
 {% load static %}
-{% load shop_tags %}
+{% comment %} {% load shop_tags %} {% endcomment %}
 
 
 {% block content %}
@@ -275,7 +275,7 @@
 </div>
 <!-- End Content -->
 
-{% show_similar_products object %}
+{% comment %} {% show_similar_products object %} {% endcomment %}
 
 <!-- Review Section -->
 <div id="reviewSection" class="container content-space-b-2 content-space-b-lg-3">
@@ -515,7 +515,7 @@
                 </div>
                 <!-- End Heading -->
 
-                <form method="post" action="{% url 'website:newsletter' %}">
+                <form method="post" action="">
                     {% csrf_token %}
                     <!-- Input Card -->
                     <div class="input-card input-card-pill input-card-sm border mb-3">
@@ -550,7 +550,7 @@
             </div>
 
             <div class="modal-body">
-                <form action="{% url 'review:submit-review' %}" method="post" id="review-form">
+                <form action="" method="post" id="review-form">
                     {% csrf_token %}
                     <input hidden name="product" value="{{object.id}}">
                     <div class="row">

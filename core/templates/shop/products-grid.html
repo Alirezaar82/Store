@@ -7,7 +7,7 @@
 
 <!-- Breadcrumb -->
 <div>
-    <div class="container content-space-t-1 content-space-t-lg-1">
+    <div class="container content-space-t-2 content-space-t-lg-4">
         <div class="row">
             <div class="col-sm">
                 <h4 class="mb-0">شبکه محصولات</h4>
@@ -132,7 +132,7 @@
                     <div class="d-sm-flex justify-content-sm-end align-items-center">
                         <!-- Select -->
                         <div class="mb-2 mb-sm-0 me-sm-2">
-                            <select class="form-select form-select-sm" name="order_by "id="order-by-filter">
+                            <select class="form-select form-select-sm" id="order-by-filter">
                                 <option value="" selected>مرتب سازی</option>
                                 <option value="-datetime_created">جدیدترین</option>
                                 <option value="datetime_created">قدیمی ترین</option>
@@ -205,7 +205,7 @@
 
                             <h4 class="card-title">
                                 <a class="text-dark"
-                                    href="">{{object.title}}</a>
+                                    href="{% url 'shop:product-detail' slug=object.slug %}">{{object.title}}</a>
                             </h4>
                             {% if object.is_discounted %}
                             <p class="card-text text-dark fs-4">
@@ -374,9 +374,7 @@
 {% endblock content %}
 
 {% block extra_js %}
-
 <script>
-
     $(document).ready(function () {
         let current_url_params = new URLSearchParams(window.location.search)
         $("#page-size-filter").val(current_url_params.get("page_size") || "")
@@ -384,9 +382,9 @@
         $("#search-query-filter").val(current_url_params.get("q") || "")
         $("#min-price-filter").val(current_url_params.get("min_price") || "")
         $("#max-price-filter").val(current_url_params.get("max_price") || "")
-        $("#category-slug-filter").val(current_url_params.get("category_slug") || "")
-    });
+        $("#category-id-filter").val(current_url_params.get("category_slug") || "")
 
+    });
     $('#page-size-filter').change(function () {
         let current_url_params = new URLSearchParams(window.location.search)
         var selectedOption = $(this).val();
@@ -394,7 +392,6 @@
         let new_url = window.location.pathname + "?" + current_url_params.toString()
         window.location.href = new_url
     });
-
     $('#order-by-filter').change(function () {
         let current_url_params = new URLSearchParams(window.location.search)
         var selectedOption = $(this).val();
@@ -404,5 +401,14 @@
     });
 
 </script>
+{% comment %} <script>
+    function changePage(page_number){
+        let current_url_params = new URLSearchParams(window.location.search)
+        current_url_params.set("page", page_number)
+        let new_url = window.location.pathname + "?" + current_url_params.toString()
+        window.location.href = new_url
+    }
+
+</script> {% endcomment %}
 
 {% endblock extra_js %}
