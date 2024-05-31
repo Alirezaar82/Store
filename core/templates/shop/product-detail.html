@@ -1,6 +1,7 @@
 {% extends '_base.html' %}
 {% load static %}
-{% comment %} {% load shop_tags %} {% endcomment %}
+
+{% load shop_tags %}
 
 
 {% block content %}
@@ -275,7 +276,7 @@
 </div>
 <!-- End Content -->
 
-{% comment %} {% show_similar_products object %} {% endcomment %}
+{% show_similar_products object %}
 
 <!-- Review Section -->
 <div id="reviewSection" class="container content-space-b-2 content-space-b-lg-3">
