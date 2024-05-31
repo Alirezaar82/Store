@@ -1,7 +1,12 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext as _
+from django.dispatch import receiver
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db.models.signals import post_save
+from django.db.models import Avg
+
+
 
 
 from decimal import Decimal
@@ -40,7 +45,7 @@ class ProductModel(models.Model):
     status = models.IntegerField(choices=ProductStatusType.choices,default=ProductStatusType.draft.value)
     discount_percent = models.IntegerField(default=0,validators = [MinValueValidator(0),MaxValueValidator(100)])
     
-    # avg_rate = models.FloatField(default=0.0)
+    avg_rate = models.FloatField(default=0.0)
     
     datetime_created = models.DateTimeField(auto_now_add=True)
     datetime_update = models.DateTimeField(auto_now=True)
@@ -48,6 +53,9 @@ class ProductModel(models.Model):
     
     class Meta:
         ordering = ["-datetime_created"]
+
+    def __str__(self):
+        return self.title
 
     def is_published(self):
         if self.status == ProductStatusType.publish.value:
@@ -70,6 +78,14 @@ class ProductModel(models.Model):
             return self.price
     def get_categories(self):
         return ", ".join([category.name for category in self.category.all()])
+    
+    def get_status(self):
+        return {
+            "id":self.status,
+            "title":ProductStatusType(self.status).name,
+            "label":ProductStatusType(self.status).label,
+        }
+        
         
 class ProductImages(models.Model):
     product = models.ForeignKey(ProductModel,on_delete=models.CASCADE,verbose_name=_('product'),related_name='images')
@@ -84,3 +100,49 @@ class WishlistProductModel(models.Model):
     
     def __str__(self):
         return self.product.title
+    
+class ReviewStatusType(models.IntegerChoices):
+    pending = 1,_('pending')
+    accepted = 2,_('accepted')
+    rejected = 3,_('rejected')
+
+class ReviewModel(models.Model):
+    user = models.ForeignKey(user,on_delete=models.CASCADE)
+    product = models.ForeignKey(ProductModel,on_delete=models.CASCADE)
+        
+    description = models.TextField()
+    rate = models.PositiveIntegerField()
+    status = models.IntegerField(choices=ReviewStatusType.choices,default=ReviewStatusType.pending.value)
+
+    datetime_created = models.DateTimeField(auto_now_add=True)
+    datetime_update = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["-datetime_created"]
+
+    def __str__(self):
+        return f'{self.user},{self.product}'
+
+    def is_accepted(self):
+        if self.status == ReviewStatusType.accepted.value:
+            return True
+        else:
+            return False
+
+    def get_status(self):
+        return {
+            "id":self.status,
+            "title":ReviewStatusType(self.status).name,
+            "label":ReviewStatusType(self.status).label,
+        }
+         
+
+@receiver(post_save,sender=ReviewModel)
+def calculate_avg_review(sender,instance,created,**kwargs):
+    if instance.status == ReviewStatusType.accepted.value:
+        product = instance.product
+        average_rating = ReviewModel.objects.filter(product=product, status=ReviewStatusType.accepted).aggregate(Avg('rate'))['rate__avg']
+        product.avg_rate = round(average_rating,1)
+        product.save()
+
+

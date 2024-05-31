@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import ProductModel,ProductCategoryModel,ProductImages
+from .models import ProductModel,ProductCategoryModel,ProductImages,WishlistProductModel,ReviewModel
 
 @admin.register(ProductModel)
 class ProductAdmin(admin.ModelAdmin):
@@ -24,4 +24,10 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(ProductImages)
 class ProductImagesAdmin(admin.ModelAdmin):
+    pass
+@admin.register(WishlistProductModel)
+class WishlistProductAdmin(admin.ModelAdmin):
+    pass
+@admin.register(ReviewModel)
+class ReviewAdmin(admin.ModelAdmin):
     pass
