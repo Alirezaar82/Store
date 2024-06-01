@@ -1,0 +1,69 @@
+{% extends "_base.html" %}
+
+{% block title %}
+Signup
+{% endblock title %}
+{% block content %}
+ <main id="content" role="main">
+    <!-- Form -->
+    <div class="container content-space-3 content-space-t-lg-4 content-space-b-lg-3">
+      <div class="flex-grow-1 mx-auto" style="max-width: 28rem;">
+        <!-- Heading -->
+        <div class="text-center mb-5 mb-md-7">
+          <h1 class="h2">فرم ورود</h1>
+          <p>برای مدیریت حساب خود وارد شوید.</p>
+        </div>
+        <!-- End Heading -->
+
+        <!-- Form -->
+        <form method="post" action="." class="js-validate needs-validation" novalidate>
+        {% csrf_token %}
+          <!-- Form -->
+          <div class="mb-4">
+            <label class="form-label" for="signupSimpleLoginphone_number">شماره تلفن همراه خود را وارد کیند</label>
+            <input type="email" class="form-control form-control-lg text-center" name="username"
+              id="signupSimpleLoginphone_number" placeholder="09000000" aria-label="0900000" required>
+            <span class="invalid-feedback">لطفا یک شماره تلفن همراه معتبر وارد کنید.</span>
+          </div>
+          <!-- End Form -->
+
+          <!-- Form -->
+          <div class="mb-4">
+            <div class="d-flex justify-content-between align-items-center">
+              <label class="form-label" for="signupSimpleLoginPassword">کلمه عبور</label>
+
+            </div>
+
+            <div class="input-group input-group-merge" data-hs-validation-validate-class>
+              <input type="password" class="js-toggle-password form-control form-control-lg text-center" name="password"
+                id="signupSimpleLoginPassword" placeholder="8+ characters required" aria-label="8+ characters required"
+                required minlength="8" data-hs-toggle-password-options='{
+                "target": "#changePassTarget",
+                "defaultClass": "bi-eye-slash",
+                "showClass": "bi-eye",
+                "classChangeTarget": "#changePassIcon"
+              }'>
+              <a id="changePassTarget" class="input-group-append input-group-text" href="javascript:;">
+                <i id="changePassIcon" class="bi-eye"></i>
+              </a>
+            </div>
+
+            <span class="invalid-feedback">لطفا یک گذر واژه معتبر وارد کنید.</span>
+          </div>
+          <!-- End Form -->
+
+          <div class="d-grid mb-3">
+            <a class="form-label-link" href="">رمز عبور را فراموش کرده اید؟</a>
+            <button type="submit" class="btn btn-primary btn-lg">ورود</button>
+          </div>
+
+          <div class="text-center">
+            <p>حساب کاربری ندارید؟ <a class="link" href="{% url 'accounts:signup' %}">اینجا ثبت نام کنید</a></p>
+          </div>
+        </form>
+        <!-- End Form -->
+      </div>
+    </div>
+    <!-- End Form -->
+  </main>
+{% endblock content %}
