@@ -12,34 +12,45 @@ class CartMain:
         self._cart = self.session.setdefault("cart", {"items": []})
 
     def update_product_quantity(self,product_id,quantity):
+        message = ''
         for item in self._cart["items"]:
             if product_id == item["product_id"]:
                 item["quantity"] = int(quantity)
+                message = 'ایتم با موفقیت آپدیت شد'
                 break
         else:
             return
         self.save()
+        return message
     
     def remove_product(self,product_id):
         for item in self._cart["items"]:
             if product_id == item["product_id"]:
                 self._cart["items"].remove(item)
+                message = 'ایتم با موفقیت حذف شد'
                 break
         else:
             return
         self.save()
-        
+        return message
+    
     def addonecart(self, product_id):
         product = get_object_or_404(ProductModel,id=product_id)
+        message = ''
         for item in self._cart["items"]:
                 if product_id == item["product_id"]:
                     if item['quantity'] <  product.stock:
                         item["quantity"] += 1
+                        message = 'ایتم به سبد خرید شما اضافه شد'
+                    else:
+                        message = 'موجودی محصول کافی نمی باشد'
                     break
         else:
             new_item = {"product_id": product_id, "quantity": 1}
             self._cart["items"].append(new_item)
+            message = 'ایتم به سبد خرید شما اضافه شد'
         self.save()
+        return message
 
     def clear(self):
         self._cart = self.session["cart"] = {"items": []}
