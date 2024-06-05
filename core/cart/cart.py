@@ -51,6 +51,31 @@ class CartMain:
             message = 'ایتم به سبد خرید شما اضافه شد'
         self.save()
         return message
+    
+    def addcart(self, product_id,quantity):
+        this_quantity = int(quantity)
+        product = get_object_or_404(ProductModel,id=product_id)
+        message = ''
+        if this_quantity == 0 :
+            return messages.warning(self.request,'تعداد نمیتواند برابر صفر باشد')
+         
+        if this_quantity >  product.stock:
+            return messages.warning(self.request,'موجودی محصول کافی نمی باشد')
+
+        for item in self._cart["items"]:
+                if product_id == item["product_id"]:
+                    if item['quantity'] <  product.stock:
+                        item["quantity"] += this_quantity
+                        messages.success(self.request,f'ایتم به تعداد {this_quantity} سبد خرید شما اضافه شد')
+                    else:
+                        messages.warning(self.request,'موجودی محصول کافی نمی باشد')
+                    break
+        else:
+            new_item = {"product_id": product_id, "quantity": this_quantity}
+            self._cart["items"].append(new_item)
+            messages.success(self.request,f'ایتم به تعداد {this_quantity} سبد خرید شما اضافه شد')
+        self.save()
+        
 
     def clear(self):
         self._cart = self.session["cart"] = {"items": []}

@@ -1,5 +1,6 @@
 from typing import Any
-from django.shortcuts import render
+from django.shortcuts import render ,redirect
+from django.urls import reverse_lazy
 from django.views.generic import View,TemplateView,FormView
 from django.http import JsonResponse
 
@@ -51,5 +52,15 @@ class CartSummaryView(TemplateView):
         context["total_payment_price"] = cart.get_total_payment_amount()
         return context
     
-class Addcart(FormView):
-    pass
+class AddCartView(View):
+
+    def post(self, request, *args, **kwargs):
+        cart = CartMain(request)
+        product_id = request.POST.get('product_id')
+        quantity = request.POST.get('quantity')
+
+        if product_id and ProductModel.objects.filter(status=ProductStatusType.publish.value,stock__gte=1):
+            message = cart.addcart(product_id,quantity)
+            product = ProductModel.objects.get(id=product_id)
+
+        return redirect(reverse_lazy('shop:product-detail',kwargs={"slug":product.slug}))
