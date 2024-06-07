@@ -6,7 +6,7 @@ from .models import *
 class OrderAdmin(admin.ModelAdmin):
     pass
 
-@admin.register(OrderItem)
+@admin.register(OrderItemModel)
 class OrderItemAdmin(admin.ModelAdmin):
     pass
 
