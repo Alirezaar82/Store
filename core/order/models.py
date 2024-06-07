@@ -80,7 +80,7 @@ class OrderModel(models.Model):
         return self.status == OrderStatusType.success.value
     
 
-class OrderItem(models.Model):
+class OrderItemModel(models.Model):
     order = models.ForeignKey(OrderModel,on_delete=models.CASCADE)
     product = models.ForeignKey('shop.ProductModel',on_delete=models.CASCADE)
     
