@@ -8,13 +8,31 @@ from django.http import JsonResponse
 from .cart import CartMain
 from shop.models import ProductModel,ProductStatusType
 
+class AddCartView(View):
+
+    def post(self, request, *args, **kwargs):
+        cart = CartMain(request)
+        product_id = request.POST.get('product_id')
+        quantity = request.POST.get('quantity')
+
+        if product_id and ProductModel.objects.filter(status=ProductStatusType.publish.value,stock__gte=1):
+            cart.addcart(product_id,int(quantity))
+            product = ProductModel.objects.get(id=product_id)
+        if request.user.is_authenticated:
+            cart.merge_session_cart_in_db(request.user)
+
+        return redirect(reverse_lazy('shop:product-detail',kwargs={"slug":product.slug}))
+
 class AddOneToCartView(View):
+
     def post(self, request, *args, **kwargs):
         cart = CartMain(request)
         product_id = request.POST.get('product_id')
         
         if product_id and ProductModel.objects.filter(status=ProductStatusType.publish.value,stock__gte=1):
             message = cart.addonecart(product_id)
+        if request.user.is_authenticated:
+            cart.merge_session_cart_in_db(request.user)
 
         return JsonResponse({"cart": cart.get_cart_dict(), "total_quantity": cart.get_total_quantity(),'message':message,})
         
@@ -26,20 +44,31 @@ class RemoveCartView(View):
 
         if product_id:
             message = cart.remove_product(product_id)
+            
+        if request.user.is_authenticated:
+            cart.merge_session_cart_in_db(request.user)
 
         return JsonResponse({"cart": cart.get_cart_dict(), "total_quantity": cart.get_total_quantity(),'message':message,})
 
 class UpdateProductQuantityView(View):
+
     def post(self,request,*args,**kwargs):
         cart = CartMain(request)
         product_id = request.POST.get('product_id')
         quantity = request.POST.get('quantity')
+
         if product_id and ProductModel.objects.filter(status=ProductStatusType.publish.value,stock__gte=1):
             message = cart.update_product_quantity(product_id,quantity)
+
+        if request.user.is_authenticated:
+            cart.merge_session_cart_in_db(request.user)
 
         return JsonResponse({"cart": cart.get_cart_dict(), "total_quantity": cart.get_total_quantity(),'message':message,})
         
         
+    
+
+
 class CartSummaryView(TemplateView):
     template_name = 'cart/cartsummary.html'
 
@@ -50,17 +79,5 @@ class CartSummaryView(TemplateView):
         context["cart_item"] = cart_item
         context["total_quantity"] = cart.get_total_quantity()
         context["total_payment_price"] = cart.get_total_payment_amount()
+
         return context
-    
-class AddCartView(View):
-
-    def post(self, request, *args, **kwargs):
-        cart = CartMain(request)
-        product_id = request.POST.get('product_id')
-        quantity = request.POST.get('quantity')
-
-        if product_id and ProductModel.objects.filter(status=ProductStatusType.publish.value,stock__gte=1):
-            message = cart.addcart(product_id,quantity)
-            product = ProductModel.objects.get(id=product_id)
-
-        return redirect(reverse_lazy('shop:product-detail',kwargs={"slug":product.slug}))

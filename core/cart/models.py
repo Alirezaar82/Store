@@ -20,7 +20,9 @@ class CartItemModel(models.Model):
     cart = models.ForeignKey(CartModel,on_delete=models.CASCADE)
     product = models.ForeignKey('shop.ProductModel',on_delete=models.CASCADE)
 
-    quantity = models.PositiveIntegerField()
+    
+    quantity = models.PositiveIntegerField(default=0)
+
 
     datetime_created = models.DateTimeField(auto_now_add=True)
     datetime_update = models.DateTimeField(auto_now=True)
