@@ -21,7 +21,7 @@ class CartModel(models.Model):
     
 
 class CartItemModel(models.Model):
-    cart = models.ForeignKey(CartModel,on_delete=models.CASCADE)
+    cart = models.ForeignKey(CartModel,on_delete=models.CASCADE,related_name="cart_items")
     product = models.ForeignKey('shop.ProductModel',on_delete=models.CASCADE)
 
     
@@ -36,3 +36,7 @@ class CartItemModel(models.Model):
 
     def __str__(self):
         return f'{self.cart}'
+    
+    def get_price(self):
+        return self.quantity * self.product.get_price()
+        

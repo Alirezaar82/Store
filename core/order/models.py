@@ -11,7 +11,7 @@ class CouponModel(models.Model):
     code = models.CharField(max_length=255)
     discount_percent = models.IntegerField(default=0,validators = [MinValueValidator(0),MaxValueValidator(100)])
     max_limit_usage = models.PositiveIntegerField(default=10)
-    used_by = models.ForeignKey(user,on_delete=models.PROTECT)
+    used_by = models.ManyToManyField(user,blank=True,related_name='coupon_users')
     expiration_date = models.DateTimeField(null=True,blank=True)
 
     datetime_created = models.DateTimeField(auto_now_add=True)
@@ -43,8 +43,9 @@ class OrderModel(models.Model):
     # payment = models.ForeignKey()
 
     total_price = models.DecimalField(default=0,max_digits=10,decimal_places=0)
+    discount_price = models.DecimalField(default=0,max_digits=10,decimal_places=0)
 
-    coupon = models.ForeignKey(CouponModel,on_delete=models.PROTECT,null=True,related_name='orders')
+    coupon = models.ForeignKey(CouponModel,on_delete=models.PROTECT,null=True,blank=True,related_name='orders')
 
 
     datetime_created = models.DateTimeField(auto_now_add=True)
@@ -73,7 +74,7 @@ class OrderModel(models.Model):
             return self.total_price
         
     def calculate_total_price(self):
-        return sum(item.price * item.quantity for item in self.order_items.all())
+        return sum(item.single_price * item.quantity for item in self.order_items.all())
     
     @property
     def is_successful(self):
@@ -81,11 +82,12 @@ class OrderModel(models.Model):
     
 
 class OrderItemModel(models.Model):
-    order = models.ForeignKey(OrderModel,on_delete=models.CASCADE)
+    order = models.ForeignKey(OrderModel,on_delete=models.CASCADE,related_name='order_items')
     product = models.ForeignKey('shop.ProductModel',on_delete=models.CASCADE)
     
     quantity = models.PositiveIntegerField(default=0)
-    price = models.DecimalField(default=0,max_digits=10,decimal_places=0)
+    total_price = models.DecimalField(default=0,max_digits=10,decimal_places=0)
+    single_price = models.DecimalField(default=0,max_digits=10,decimal_places=0)
 
     datetime_created = models.DateTimeField(auto_now_add=True)
     datetime_update = models.DateTimeField(auto_now=True)
