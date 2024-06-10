@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'shop',
     'cart',
     'order',
+    'payment',
+
 
 ]
 SITE_ID = 1
@@ -177,5 +179,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # password reset link timeout
 # PASSWORD_RESET_TIMEOUT = 172800 
 
-# MERCHANT_ID = config("MERCHANT_ID",default="4ced0a1e-4ad8-4309-9668-3ea3ae8e8897")
-# SANDBOX_MODE = config("SANDBOX_MODE", cast=bool, default=True)
+MERCHANT_ID = config("MERCHANT_ID",default="4ced0a1e-4ad8-4309-9668-3ea3ae8e8810")
+SANDBOX_MODE = config("SANDBOX_MODE", cast=bool, default=True)

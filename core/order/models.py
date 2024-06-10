@@ -29,7 +29,7 @@ class CouponModel(models.Model):
 class OrderStatusType(models.IntegerChoices):
     pending = 1,_('pending')
     success = 2,_('success')
-    faild = 3,_('faild')
+    failed = 3,_('failed')
 
 class OrderModel(models.Model):
     user = models.ForeignKey(user,on_delete=models.PROTECT)
@@ -40,7 +40,7 @@ class OrderModel(models.Model):
     city = models.CharField(max_length=255)
     zip_code = models.CharField(default='0')
 
-    # payment = models.ForeignKey()
+    payment = models.ForeignKey('payment.Paymentmodel',on_delete=models.PROTECT,blank=True,null=True,related_name='order_payment')
 
     total_price = models.DecimalField(default=0,max_digits=10,decimal_places=0)
     discount_price = models.DecimalField(default=0,max_digits=10,decimal_places=0)

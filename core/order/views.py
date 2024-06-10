@@ -11,6 +11,8 @@ from accounts.models import UserAddressModel
 from .forms import OrderCheckOutForm
 from .models import CouponModel,OrderModel,OrderItemModel
 from cart.models import CartModel,CartItemModel
+from payment.zarinpall_client import ZarinPalSandBox
+from payment.models import Paymentmodel
 
 
 class OrderCheckOutView(LoginRequiredMixin,FormView):
@@ -36,8 +38,21 @@ class OrderCheckOutView(LoginRequiredMixin,FormView):
         total_price = order.calculate_total_price()
         self.apply_coupon(coupon,order,user,total_price)
         order.save()
-        return redirect(reverse_lazy('order:complete'))
+        return redirect(self.create_payment_url(order))
     
+    def create_payment_url(self,order):
+        zarinpal = ZarinPalSandBox()
+        response = zarinpal.payment_request(
+            amount=order.get_price()
+        )
+        payment_obj = Paymentmodel.objects.create(
+            authority_id = response.get('Authority'),
+            amount = order.get_price()
+        )
+        order.payment = payment_obj
+        order.save()
+        return zarinpal.generate_payment_url(response.get("Authority"))
+
     def form_invalid(self, form):
         
         return super().form_invalid(form)
