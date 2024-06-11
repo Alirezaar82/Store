@@ -21,15 +21,17 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # my urls
     path('accounts/',include('accounts.urls')),
     path('',include('website.urls')),
     path('shop/',include('shop.urls')),
     path('cart/',include('cart.urls')),
     path('order/',include('order.urls')),
     path('payment/',include('payment.urls')),
+    path('dashboard/',include('dashboard.urls')),
 
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 
-
+# for debug toolbar
 if settings.SHOW_DEBUGGER_TOOLBAR:
     urlpatterns += [path('__debug__/', include('debug_toolbar.urls')),]

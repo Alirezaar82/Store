@@ -73,6 +73,7 @@ class CustomeUser(AbstractBaseUser, PermissionsMixin):
 
 class Profile(models.Model):
     user = models.OneToOneField('CustomeUser', on_delete=models.CASCADE,related_name="user_profile")
+    email = models.EmailField(blank=True,null=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     image = models.ImageField(upload_to="profile/",default="profile/default.png")

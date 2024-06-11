@@ -72,8 +72,8 @@ class CustomUserAdmin(UserAdmin):
 
 @admin.register(Profile)
 class CustomProfileAdmin(admin.ModelAdmin):
-    list_display = ("id","user", "first_name","last_name",)
-    searching_fields = ("user","first_name","last_name",)
+    list_display = ("id","user", "first_name","last_name",'email')
+    searching_fields = ("user","first_name","last_name",'email')
 
 
 

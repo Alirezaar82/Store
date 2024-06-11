@@ -1,0 +1,87 @@
+{% extends 'dashboard/admin/base.html' %}
+{% load static %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-light mb-0">
+        <li class="breadcrumb-item">حساب</li>
+        <li class="breadcrumb-item">داشبورد ادمین</li>
+        <li class="breadcrumb-item active" aria-current="page">
+            کد تخفیف ها
+        </li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<!-- Card -->
+<div class="card">
+    <!-- Header -->
+    <div class="card-header border-bottom">
+      <h5 class="card-header-title">کد تخفیف </h5>
+    </div>
+    <!-- End Header -->
+
+    <!-- Body -->
+    <div class="card-body">
+      <div class="row">
+        <div class="table-responsive">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col"> کد </th>
+                            <th scope="col">درصد تخفیف</th>
+                            <th scope="col"> تعداد مجاز استفاده کد</th>
+                            <th scope="col">تعداد استفاده شده</th>
+                            <th scope="col">تاریخ انقضا </th>
+                            <th scope="col">زمان ساخت </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for object in object_list %}
+                        <tr>
+                            <th scope="row">{{object.id}}</th>
+                            <td>{{object.code}}</td>
+                            <td>{{object.discount_percent}}</td>
+                            <td>{{object.max_limit_usage}}</td>
+                            <td>{{object.used_by_count}}</td>
+                            {% if object.expiration_date%}
+                            <td>{{object.expiration_date|date:"Y-m-d" }}</td>
+                            {% else %}
+                            <td>------</td>
+                            {% endif %}
+                            <td>{{object.created_date|date:"Y-m-d" }}</td>
+                            <td class="d-flex">
+                                <a class="btn btn-sm btn-icon btn-ghost-secondary"
+                                    href="{% url 'dashboard:admin:coupon-edit' pk=object.pk %}"><i class="bi-pencil-square"></i></a>
+                            </td>
+                        </tr> 
+                        {% endfor %}
+                    </tbody>
+                </table>
+          <!-- End Radio Check -->
+        </div>
+        <!-- End Col -->
+
+
+          <!-- Card -->
+          <a class="card card-dashed card-centered" href="{% url 'dashboard:admin:coupon-create' %}">
+                <div class="card-body card-dashed-body py-8">
+                {% comment %} <img class="avatar avatar-lg avatar-4x3 mb-2" src="{% static '/svg/illustrations/oc-address.svg' %}"
+                    alt="Image Description" /> {% endcomment %}
+                    <span class="d-block"><i class="bi-plus"></i> یک کد تخفیف جدید اضافه کنید</span>
+                </div>
+            </a>
+          <!-- End Card -->
+        </div>
+        <!-- End Col -->
+      </div>
+      <!-- End Row -->
+
+
+    </div>
+    <!-- End Body -->
+  </div>
+  <!-- End Card -->
+{% endblock %}
