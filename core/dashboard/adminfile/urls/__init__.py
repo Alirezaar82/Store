@@ -5,4 +5,5 @@ app_name = "admin"
 urlpatterns = [
     path("",include("dashboard.adminfile.urls.home")),
     path("",include("dashboard.adminfile.urls.profile")),
+    path("",include("dashboard.adminfile.urls.security")),
 ]

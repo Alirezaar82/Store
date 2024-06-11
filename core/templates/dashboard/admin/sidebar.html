@@ -23,7 +23,7 @@
           <!-- List -->
           <ul class="nav nav-sm nav-tabs nav-vertical mb-4">
             <li class="nav-item">
-              <a class="nav-link" href="">
+              <a class="nav-link" href="{% url 'dashboard:admin:home' %}">
                 <i class="bi-person-badge nav-icon"></i>داشبورد
               </a>
             </li>
@@ -33,7 +33,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="">
+              <a class="nav-link" href="{% url 'dashboard:admin:security-edit' %}">
                 <i class="bi-shield-shaded nav-icon"></i> امنیت
               </a>
             </li>
@@ -52,6 +52,11 @@
             <li class="nav-item">
               <a class="nav-link " href="">
                 <i class="bi-shop-window nav-icon"></i> دسته بندی
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="">
+                <i class="bi-shop-window nav-icon"></i> صفحات سایت
               </a>
             </li>
             <li class="nav-item">
