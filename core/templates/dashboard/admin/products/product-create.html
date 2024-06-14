@@ -80,14 +80,14 @@
                     <label>درصد تخفیف</label>
                     {{form.discount_percent}}
                 </div>
+                <div class="col-md-12 mb-3">
+                    <label>توضیحات</label>
+                    {{form.description}}
+                </div>
 
                 <div class="col-md-12 mb-3">
                     <label>توضیح کوتاه</label>
                     {{form.brief_description}}
-                </div>
-                <div class="col-md-12 mb-3">
-                    <label>توضیحات</label>
-                    {{form.description}}
                 </div>
 
                 <div class="col-md-12 mb-3">
@@ -99,7 +99,7 @@
             </div>
             <div class="card-footer">
                 <div class=" d-flex pt-5 justify-content-end">
-                    <a class="btn btn-secondary ms-3" href="{% url 'dashboard:admin:product-list' %}">بازگشت</a>
+                    <a class="btn btn-secondary ms-3" href="{% url 'dashboard:admin:products-list' %}">بازگشت</a>
                     <button class="btn btn-primary ms-3" type="submit">ایجاد محصول</button>
                 </div>
             </div>

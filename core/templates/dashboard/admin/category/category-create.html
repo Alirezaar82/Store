@@ -41,7 +41,7 @@
 <div class="card">
     <!-- Header -->
     <div class="card-header border-bottom">
-        <h5 class="card-header-title">ایجاد دسته بندی</h5>
+        <h5 class="card-header-name">ایجاد دسته بندی</h5>
     </div>
     <!-- End Header -->
 
@@ -52,7 +52,7 @@
             <div class="row d-flex ">
                 <div class="col-md-6 mb-3">
                     <label>نام دسته بندی</label>
-                    {{form.title}}
+                    {{form.name}}
                 </div>
                 <div class="col-md-6 mb-3">
                     <label>slug دسته بندی - <button class="small-primary-button" type="button"
@@ -76,21 +76,21 @@
 <script>
 
     function generateSlug() {
-        const title = $("#id_title").val();
-        const slug = slugify(title);
+        const name = $("#id_name").val();
+        const slug = slugify(name);
         $("#id_slug").val(slug)
     }
 
-    function slugify(titleStr) {
-        titleStr = titleStr.replace(/^\s+|\s+$/g, '');
-        titleStr = titleStr.toLowerCase();
+    function slugify(nameStr) {
+        nameStr = nameStr.replace(/^\s+|\s+$/g, '');
+        nameStr = nameStr.toLowerCase();
         //persian support
-        titleStr = titleStr.replace(/[^a-z0-9_\s-ءاأإآؤئبتثجحخدذرزسشصضطظعغفقكلمنهويةى]#u/, '')
+        nameStr = nameStr.replace(/[^a-z0-9_\s-ءاأإآؤئبتثجحخدذرزسشصضطظعغفقكلمنهويةى]#u/, '')
             // Collapse whitespace and replace by -
             .replace(/\s+/g, '-')
             // Collapse dashes
             .replace(/-+/g, '-');
-        slugStr = titleStr;
+        slugStr = nameStr;
         return slugStr;
     }
 </script>

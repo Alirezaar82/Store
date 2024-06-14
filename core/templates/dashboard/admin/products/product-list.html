@@ -17,12 +17,24 @@
 <!-- Card -->
 <div class="card">
     <!-- Header -->
+    
     <div class="card-header border-bottom">
         <div class="d-flex justify-content-between align-items-center">
             <h5 class="">لیست محصولات</h5>
-            <a class="btn btn-primary" href="{%  url 'dashboard:admin:product-create' %}">ایجاد محصول</a>
+            <a class="btn btn-primary" href="{% url 'dashboard:admin:product-create' %}">ایجاد محصول</a>
+        </div>
+        <div class="d-flex justify-content-start">
+            <div>
+                {{total_items}} محصول
+            </div>
+        </div>
+        <div class="d-flex justify-content-start">
+            <div>
+                {{total_items_published}}  محصول منتشر شده
+            </div>
         </div>
     </div>
+    
     <!-- End Header -->
 
     <!-- Body -->
@@ -32,7 +44,7 @@
             <form action="." class="row">
 
                 <!-- Input Card -->
-                <div class="col-md-3 py-1">
+                <div class="col-md-10 py-1">
                     <input type="text" class="form-control form-control-sm" placeholder="جستو جوی کالا" name="q"
                         id="search-query-filter">
 
@@ -42,7 +54,7 @@
                     <select class="form-select form-select-sm" name="category_id" id="category-id-filter">
                         <option value="" selected>دسته بندی</option>
                         {% for category in categories %}
-                        <option value="{{category.id}}">{{category.title}}</option>
+                        <option value="{{category.id}}">{{category.name}}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -70,6 +82,11 @@
                 <div class="col-md-1 py-1">
                     <button type="submit" class="btn btn-sm btn-icon btn-primary btn-search"><i class="bi-search"></i></button>
                 </div>
+                <div class="col-md-1 py-1">
+                    <a href="{% url 'dashboard:admin:products-list' %}" class="btn btn-sm btn-icon btn-primary btn-search">
+                        <i class="bi bi-arrow-repeat"></i>
+                    </a>
+                </div>
             </form>
 
         </div>
@@ -96,7 +113,7 @@
                         <tr>
                             <th scope="row">{{object.id}}</th>
                             <td>{{object.title}}</td>
-                            <td>{% for category in object.category.all %} {{category.title}}
+                            <td>{% for category in object.category.all %} {{category.name}}
                                 {% if not forloop.last %},{% endif %} {% endfor %}</td>
                             <td>{{object.price}}</td>
                             <td>{{object.stock}}</td>
@@ -107,12 +124,11 @@
                             <td>%{{ object.discount_percent}}</td>
                             <td class="d-flex">
                                 <a class="btn btn-sm btn-icon btn-ghost-secondary"
-                                    href="{% url 'dashboard:admin:product-edit' pk=object.pk %}"><i class="bi-pencil-square"></i></a>
+                                    href="{% url 'dashboard:admin:product-edit' pk=object.id %}"><i class="bi-pencil-square"></i></a>
 
-                                {% if object.is_published %}
                                 <a class="btn btn-sm btn-icon btn-ghost-primary" target="_blank"
-                                    href=""><i class="bi-eye"></i></a>
-                                {% endif %}
+                                    href="{% url 'dashboard:admin:product-detail' slug=object.slug %}"><i class="bi-eye"></i></a>
+
                             </td>
                         </tr>
                         {% endfor %}
@@ -121,15 +137,7 @@
                 </table>
             </div>
             <!-- End Table -->
-            <div class="row m-1 py-0 ">
-                <div class="d-flex justify-content-start">
-                    <div>
-                        {{total_items}} محصول
-                    </div>
-
-
-                </div>
-            </div>
+            
 
             <!-- Pagination -->
 

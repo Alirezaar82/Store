@@ -26,13 +26,14 @@ class ProductCategoryModel(models.Model):
     def __str__(self):
         return self.name
     
+    
 class ProductStatusType(models.IntegerChoices):
     publish = 1,_('publish')
     draft = 2,_('draft')
     
 class ProductModel(models.Model):
     user = models.ForeignKey(user,on_delete=models.CASCADE,related_name=_('user'))
-    category = models.ManyToManyField(ProductCategoryModel,verbose_name=_('product category'))
+    category = models.ManyToManyField(ProductCategoryModel,verbose_name=_('product_category'))
 
     title = models.CharField(verbose_name=_('title'),max_length=255)
     slug = models.SlugField(verbose_name=_('slug'),unique=True,allow_unicode=True)

@@ -20,7 +20,16 @@ class CategoryAdmin(admin.ModelAdmin):
         'id',
         'name',
         'slug',
+        'list_products',  # Add the method to list display
     ]
+    
+    def list_products(self, obj):
+        # Fetch related products
+        products = ProductModel.objects.filter(category=obj).count()
+        # Create a string of product titles
+        return products
+    
+    # Set the method's short description for the admin interface
 
 @admin.register(ProductImages)
 class ProductImagesAdmin(admin.ModelAdmin):
