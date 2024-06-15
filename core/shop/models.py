@@ -41,7 +41,8 @@ class ProductModel(models.Model):
     description = models.TextField()
     brief_description = models.TextField(null=True,blank=True)
     price = models.DecimalField(default=0,max_digits=10,decimal_places=0)
-    
+
+    sold = models.PositiveIntegerField(null=True,blank=True)
     stock = models.PositiveIntegerField(default=0)
     status = models.IntegerField(choices=ProductStatusType.choices,default=ProductStatusType.draft.value)
     discount_percent = models.IntegerField(default=0,validators = [MinValueValidator(0),MaxValueValidator(100)])
@@ -89,7 +90,7 @@ class ProductModel(models.Model):
         
         
 class ProductImages(models.Model):
-    product = models.ForeignKey(ProductModel,on_delete=models.CASCADE,verbose_name=_('product'),related_name='images')
+    product = models.ForeignKey(ProductModel,on_delete=models.CASCADE,verbose_name=_('product'),related_name='product_images')
     file = models.ImageField(upload_to='shop/extra/',verbose_name=_('file'))
 
     datetime_created = models.DateTimeField(auto_now_add=True)

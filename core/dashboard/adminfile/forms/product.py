@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from shop.models import ProductModel
+from shop.models import ProductModel,ProductImages
 
 class ProductForm(forms.ModelForm):
     class Meta:
@@ -40,3 +40,16 @@ class ProductForm(forms.ModelForm):
             raise ValidationError(".توضیحات کوتاه نمی‌تواند بیش از ۲۵۵ کاراکتر باشد")
         return brief_description
 
+class ProductImageForm(forms.ModelForm):
+
+
+    class Meta:
+        model = ProductImages
+        fields = [
+            "file",
+        ]
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['file'].widget.attrs['class'] = 'form-control'
+        self.fields['file'].widget.attrs['accept'] = 'image/png, image/jpg, image/jpeg'

@@ -44,6 +44,11 @@
 
           <!-- List -->
           <ul class="nav nav-sm nav-tabs nav-vertical mb-4">
+          <li class="nav-item">
+              <a class="nav-link " href="{% url 'dashboard:admin:website' %}">
+                <i class="bi bi-app nav-icon"></i> صفحات سایت
+              </a>
+            </li>
             <li class="nav-item">
               <a class="nav-link " href="{% url 'dashboard:admin:products-list' %}">
                 <i class="bi-shop-window nav-icon"></i> محصولات
@@ -54,11 +59,7 @@
                 <i class="bi bi-list nav-icon"></i> دسته بندی
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link " href="">
-                <i class="bi bi-app nav-icon"></i> صفحات سایت
-              </a>
-            </li>
+
             <li class="nav-item">
               <a class="nav-link " href="">
                 <i class="bi-receipt-cutoff nav-icon"></i> سفارشات

@@ -119,7 +119,7 @@
             <!-- End Header -->
 
             <!-- Body -->
-            {% comment %} <form action="" method="post"
+            <form action="{% url 'dashboard:admin:product-add-image' pk=object.pk %}" method="post"
                 enctype="multipart/form-data">
 
                 {% csrf_token %}
@@ -136,9 +136,9 @@
                 </div>
 
 
-            </form> {% endcomment %}
+            </form> 
 
-            {% comment %} <div class="card-body">
+            <div class="card-body">
                 <div class="row d-flex ">
                     {% for product_image in object.product_images.all %}
                     <div class="col-md-2">
@@ -149,7 +149,7 @@
                             <button type="submit" class="btn btn-danger btn-sm">حذف تصویر</button>
                         </form>
                     </div>
-                    {% endfor %} {% endcomment %}
+                    {% endfor %}
 
 
                 </div>

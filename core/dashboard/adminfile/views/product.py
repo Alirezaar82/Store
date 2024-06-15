@@ -6,10 +6,11 @@ from dashboard.permissions import HasAdminAccessPermission
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages 
 
 from shop.models import *
 from shop.forms import *
-from ..forms import ProductForm
+from ..forms import ProductForm ,ProductImageForm
 
 class AdminProductsListView(LoginRequiredMixin,HasAdminAccessPermission,ListView):
     template_name = 'dashboard/admin/products/product-list.html'
@@ -75,6 +76,10 @@ class AdminProductEditView(LoginRequiredMixin, HasAdminAccessPermission, Success
 
     def get_success_url(self):
         return reverse_lazy("dashboard:admin:product-edit", kwargs={"pk": self.get_object().pk})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["image_form"] = ProductImageForm()
+        return context
     
 class AdminProductCreateView(LoginRequiredMixin, HasAdminAccessPermission, SuccessMessageMixin, CreateView):
     template_name = "dashboard/admin/products/product-create.html"
@@ -89,9 +94,56 @@ class AdminProductCreateView(LoginRequiredMixin, HasAdminAccessPermission, Succe
 
     def get_success_url(self):
         return reverse_lazy("dashboard:admin:products-list")
-    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["image_form"] = ProductImageForm()
+        return context
 class AdminProductDeleteview(LoginRequiredMixin, HasAdminAccessPermission, SuccessMessageMixin, DeleteView):
     template_name = "dashboard/admin/products/product-delete.html"
     queryset = ProductModel.objects.all()
     success_url = reverse_lazy("dashboard:admin:products-list")
     success_message = "حذف محصول با موفقیت انجام شد"
+
+
+class AdminProductAddImageView(LoginRequiredMixin, HasAdminAccessPermission, CreateView):
+    http_method_names = ['post']
+    form_class = ProductImageForm
+
+    def get_success_url(self):
+        return reverse_lazy('dashboard:admin:product-edit', kwargs={'pk': self.kwargs.get('pk')})
+
+    def get_queryset(self):
+        return ProductImages.objects.filter(product__id=self.kwargs.get('pk'))
+
+    def form_valid(self, form):
+        form.instance.product = ProductModel.objects.get(
+            pk=self.kwargs.get('pk'))
+        # handle successful form submission
+        messages.success(
+            self.request, 'تصویر مورد نظر با موفقیت ثبت شد')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        # handle unsuccessful form submission
+        messages.error(
+            self.request, 'اشکالی در ارسال تصویر رخ داد لطفا مجدد امتحان نمایید')
+        return redirect(reverse_lazy('dashboard:admin:product-edit', kwargs={'pk': self.kwargs.get('pk')}))
+
+
+class AdminProductRemoveImageView(LoginRequiredMixin, HasAdminAccessPermission, SuccessMessageMixin, DeleteView):
+    http_method_names = ["post"]
+    success_message = "تصویر مورد نظر با موفقیت حذف شد"
+
+    def get_queryset(self):
+        return ProductImages.objects.filter(product__id=self.kwargs.get('pk'))
+    
+    def get_object(self, queryset=None):
+        return self.get_queryset().get(pk=self.kwargs.get('image_id'))
+
+    def get_success_url(self):
+        return reverse_lazy('dashboard:admin:product-edit', kwargs={'pk': self.kwargs.get('pk')})
+
+    def form_invalid(self, form):
+        messages.error(
+            self.request, 'اشکالی در حذف تصویر رخ داد لطفا مجدد امتحان نمایید')
+        return redirect(reverse_lazy('dashboard:admin:product-edit', kwargs={'pk': self.kwargs.get('pk')}))

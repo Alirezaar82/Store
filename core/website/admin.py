@@ -1,3 +1,10 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import *
+
+
+@admin.register(LogoModel)
+class LogoAdmin(admin.ModelAdmin):
+    list_display = [
+        'id',
+    ]
