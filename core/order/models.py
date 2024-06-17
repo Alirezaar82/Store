@@ -31,9 +31,15 @@ class OrderStatusType(models.IntegerChoices):
     success = 2,_('success')
     failed = 3,_('failed')
 
+class ShippinStatusType(models.IntegerChoices):
+    processing = 1,_('processing')
+    posted = 2,_('posted')
+    returned = 3,_('returned')
+
 class OrderModel(models.Model):
     user = models.ForeignKey(user,on_delete=models.PROTECT)
     status = models.IntegerField(choices=OrderStatusType.choices,default=OrderStatusType.pending.value,)
+    shippinStatus = models.IntegerField(choices=ShippinStatusType.choices,default=ShippinStatusType.processing.value,)
     
     address = models.CharField(max_length=255)
     state = models.CharField(max_length=255)
@@ -63,6 +69,14 @@ class OrderModel(models.Model):
             "title":OrderStatusType(self.status).name,
             "label":OrderStatusType(self.status).label,
         }
+    
+    def get_shippinstatus(self):
+        return {
+            "id":self.shippinStatus,
+            "title":ShippinStatusType(self.shippinStatus).name,
+            "label":ShippinStatusType(self.shippinStatus).label,
+        }
+    
     def get_full_address(self):
         return f'state={self.state},city={self.city},address={self.address},zip_code={self.zip_code}'
     

@@ -43,6 +43,7 @@
                 <th scope="col">نام محصول</th>
                 <th scope="col">تعداد سفارش</th>
                 <th scope="col">قیمت واحد محصول</th>
+                <th scope="col">قیمت کل محصول</th>
               </tr>
             </thead>
             <tbody>
@@ -57,7 +58,8 @@
                 <td>{{order_item.product.pk}}</td>
                 <td>{{order_item.product.title}}</td>
                 <td>{{order_item.quantity}}</td>
-                <td class="formatted-price">{{order_item.price}}</td>
+                <td class="formatted-price">{{order_item.single_price}}</td>
+                <td class="formatted-price">{{order_item.total_price}}</td>
               </tr>
               {% endfor %}
             </tbody>
@@ -71,16 +73,15 @@
 
     </div>
     <div class="card-footer row pt-5 mt-5">
-      <form>
         <div class="row mb-3 align-items-center">
           <dt class="col-md-3">سفارش دهنده:</dt>
-          <dl class="col-md-3">{{request.user.user_profile.get_fullname}}</dl>
+          <dl class="col-md-3">{{object.user.user_profile.get_fullname}}</dl>
           <dt class="col-md-3">وضعیت سفارش:</dt>
           <dl class="col-md-3 ">{{object.get_status.label}}</dl>
         </div>
         <div class="row mb-3">
           <dt class="col-md-3"> تاریخ سفارش:</dt>
-          <dl class="col-md-3">{{object.created_date|date:"Y-m-d h:i"}}</dl>
+          <dl class="col-md-3">{{object.datetime_created|date:"Y-m-d h:i"}}</dl>
           <dt class="col-md-3">قیمت نهایی</dt>
           <dl class="col-md-3 formatted-price">{{object.total_price}}</dl>
         </div>
@@ -99,11 +100,19 @@
           <dt class="col-md-3"> کد پستی:</dt>
           <dl class="col-md-3">{{object.zip_code}}</dl>
         </div>
+        <form  action="." method="post">
+            {% csrf_token %}
+              <div class="col-md-6 mb-3">
+                    <label>وضعیت مرسوله:</label>
+                    {{form.shippinStatus}}
+                </div>
+                <button class="btn btn-primary" type="submit">ذخیره تغییرات</button>
+          </form>
         <div class=" d-flex pt-5 justify-content-end">
+
           <a class="btn btn-secondary ms-3" href="{% url 'dashboard:admin:order-list' %}">بازگشت</a>
 
         </div>
-      </form>
     </div>
     <!-- End Body -->
   </div>

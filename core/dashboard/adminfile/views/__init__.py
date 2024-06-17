@@ -5,3 +5,4 @@ from .product import *
 from .category import *
 from .logo import *
 from .website import *
+from .order import *

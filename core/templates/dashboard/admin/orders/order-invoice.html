@@ -47,12 +47,11 @@
                             </div>
                             <!-- End Col -->
 
-                            <div class="col-sm-auto  mb-3">
+                            <div class="col-sm-auto  mb-2">
                                 <div class="mb-2">
-                                    <img class="avatar" src="{% static '/svg/logos/logo-short.svg' %}" alt="Logo">
+                                    <img class="" src="{{logo_site.logo.url}}" alt="Logo">
                                 </div>
 
-                                <h1 class="h2 text-primary">Front Inc.</h1>
                             </div>
                             <!-- End Col -->
 
@@ -63,7 +62,7 @@
                             <div class="col-md">
                                 <dl class="row">
                                     <dt class="col-sm-8">نام سفارش دهنده:</dt>
-                                    <dd class="col-sm-4">{{object.user.user_profile.get_fullname}}</dd>
+                                    <dd class="col-sm-5">{{object.user.user_profile.get_fullname}}</dd>
                                 </dl>
                                 <dl>
                                     <dt class="col-sm-4">آدرس:</dt>
@@ -75,9 +74,9 @@
 
                             <div class="col-md text-md-end">
                                 <dl class="row">
-                                    <dt class="col-sm-8">زمان سفارش:</dt>
-                                    <dd class="col-sm-4">{{object.created_date|date:"Y-m-d h:i"}}</dd>
-                             
+                                    <dt class="col-sm-4">زمان سفارش:</dt>
+                                    <dd class="col-sm-8">{{object.datetime_created|date:"Y-m-d"}}</dd>
+    
                                 </dl>
                             </div>
                             <!-- End Col -->
@@ -94,6 +93,7 @@
                                         <th>کالا</th>
                                         <th>تعداد</th>
                                         <th class="table-text-end">قیمت هر واحد</th>
+                                        <th class="table-text-end">قیمت کل محصول</th>
                                     </tr>
                                 </thead>
 
@@ -105,7 +105,8 @@
                                         <th>{{order_item.product.title}}</th>
                                         <td>{{order_item.quantity}}</td>
 
-                                        <td class="table-text-end formatted-price">{{order_item.price}}</td>
+                                        <td class="table-text-end formatted-price">{{order_item.single_price}}</td>
+                                        <td class="table-text-end formatted-price">{{order_item.total_price}}</td>
                                     </tr>
                                     {% endfor %}
 

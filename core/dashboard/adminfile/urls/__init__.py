@@ -10,4 +10,5 @@ urlpatterns = [
     path("",include("dashboard.adminfile.urls.category")),
     path("",include("dashboard.adminfile.urls.logo")),
     path("",include("dashboard.adminfile.urls.website")),
+    path("",include("dashboard.adminfile.urls.order")),
 ]
