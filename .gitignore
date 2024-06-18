@@ -153,3 +153,5 @@ cython_debug/
 postgres/data/*
 
 core/media/*
+
+Todolist.txt
