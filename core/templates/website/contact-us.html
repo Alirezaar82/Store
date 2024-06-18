@@ -131,14 +131,15 @@
                         <!-- End Heading -->
 
                         <!-- Form -->
-                        <form>
+                        <form action="{% url 'website:submit-ticket' %}" method="post">
+                        {% csrf_token %}
                             <div class="row gx-3">
                                 <div class="col-sm-6">
                                     <!-- Form -->
                                     <div class="mb-3">
                                         <label class="form-label" for="hireUsFormFirstName">نام</label>
                                         <input type="text" class="form-control form-control-lg"
-                                            name="hireUsFormNameFirstName" id="hireUsFormFirstName"
+                                            name="first_name" id="hireUsFormFirstName"
                                             placeholder="نام" aria-label="First name">
                                     </div>
                                     <!-- End Form -->
@@ -150,7 +151,7 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="hireUsFormLasttName">نام خانوادگی</label>
                                         <input type="text" class="form-control form-control-lg"
-                                            name="hireUsFormNameLastName" id="hireUsFormLasttName"
+                                            name="last_name" id="hireUsFormLasttName"
                                             placeholder="نام خانوادگی" aria-label="Last name">
                                     </div>
                                     <!-- End Form -->
@@ -165,7 +166,7 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="hireUsFormWorkEmail">آدرس ایمیل</label>
                                         <input type="email" class="form-control form-control-lg"
-                                            name="hireUsFormNameWorkEmail" id="hireUsFormWorkEmail"
+                                            name="email" id="hireUsFormWorkEmail"
                                             placeholder="email@site.com" aria-label="email@site.com">
                                     </div>
                                     <!-- End Form -->
@@ -178,7 +179,7 @@
                                         <label class="form-label" for="hireUsFormPhone">شماره همراه <span
                                                 class="form-label-secondary">(اختیاری)</span></label>
                                         <input type="text" class="form-control form-control-lg"
-                                            name="hireUsFormNamePhone" id="hireUsFormPhone"
+                                            name="phone_number" id="hireUsFormPhone"
                                             placeholder="+9891200000">
                                     </div>
                                     <!-- End Form -->
@@ -186,11 +187,19 @@
                                 <!-- End Col -->
                             </div>
                             <!-- End Row -->
-
+                            <div class="col-sm-6">
+                                    <!-- Form -->
+                                    <div class="mb-3">
+                                        <label class="form-label" for="hireUsFormPhone">موضوع</label>
+                                        <input type="text" class="form-control form-control-lg"
+                                            name="subject" id="hireUsFormsubject">
+                                    </div>
+                                    <!-- End Form -->
+                                </div>
                             <!-- Form -->
                             <div class="mb-3">
                                 <label class="form-label" for="hireUsFormDetails">توضیحات</label>
-                                <textarea class="form-control form-control-lg" name="hireUsFormNameDetails"
+                                <textarea class="form-control form-control-lg" name="description"
                                     id="hireUsFormDetails" placeholder="توضیحات خود را وارد نمایید"
                                     aria-label="Tell us about your ..." rows="4"></textarea>
                             </div>

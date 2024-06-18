@@ -13,11 +13,11 @@ class LogoModel(models.Model):
 class ContactUsModel(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    
-    email = models.EmailField()
-    phon_number = models.CharField(max_length=255,null=True,blank=True)
 
-    title = models.CharField(max_length=255)
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=255,null=True,blank=True)
+
+    subject = models.CharField(max_length=255)
     description = models.TextField()
 
     datetime_created = models.DateTimeField(auto_now_add=True)
