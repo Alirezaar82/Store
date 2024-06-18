@@ -10,6 +10,27 @@ class LogoModel(models.Model):
             raise ValidationError('There is already an instance of LogoModel.')
         return super(LogoModel, self).save(*args, **kwargs)
     
+class ContactUsModel(models.Model):
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    
+    email = models.EmailField()
+    phon_number = models.CharField(max_length=255,null=True,blank=True)
+
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+
+    datetime_created = models.DateTimeField(auto_now_add=True)
+    datetime_update = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["-datetime_created"]
+
+    def __str__(self):
+        return f'{self.email} , {self.first_name},{self.last_name}'
+
+
+
 
 # class AboutUsModel(models.Model):
 #     title_brief_description = models.CharField(max_length=255)
