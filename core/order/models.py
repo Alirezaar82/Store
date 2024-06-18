@@ -9,7 +9,7 @@ user = get_user_model()
 
 class CouponModel(models.Model):
     code = models.CharField(max_length=255)
-    discount_percent = models.IntegerField(default=0,validators = [MinValueValidator(0),MaxValueValidator(100)])
+    discount_percent = models.IntegerField(default=5,validators = [MinValueValidator(5),MaxValueValidator(100)])
     max_limit_usage = models.PositiveIntegerField(default=10)
     used_by = models.ManyToManyField(user,blank=True,related_name='coupon_users')
     expiration_date = models.DateTimeField(null=True,blank=True)

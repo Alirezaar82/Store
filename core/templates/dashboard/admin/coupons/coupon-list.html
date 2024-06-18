@@ -45,13 +45,13 @@
                             <td>{{object.code}}</td>
                             <td>{{object.discount_percent}}</td>
                             <td>{{object.max_limit_usage}}</td>
-                            <td>{{object.used_by_count}}</td>
+                            <td>{{object.get_usage_all}}</td>
                             {% if object.expiration_date%}
                             <td>{{object.expiration_date|date:"Y-m-d" }}</td>
                             {% else %}
                             <td>------</td>
                             {% endif %}
-                            <td>{{object.created_date|date:"Y-m-d" }}</td>
+                            <td>{{object.datetime_created|date:"Y-m-d" }}</td>
                             <td class="d-flex">
                                 <a class="btn btn-sm btn-icon btn-ghost-secondary"
                                     href="{% url 'dashboard:admin:coupon-edit' pk=object.pk %}"><i class="bi-pencil-square"></i></a>

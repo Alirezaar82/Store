@@ -11,4 +11,6 @@ urlpatterns = [
     path("",include("dashboard.adminfile.urls.logo")),
     path("",include("dashboard.adminfile.urls.website")),
     path("",include("dashboard.adminfile.urls.order")),
+    path("",include("dashboard.adminfile.urls.coupon")),
+    path("",include("dashboard.adminfile.urls.review")),
 ]

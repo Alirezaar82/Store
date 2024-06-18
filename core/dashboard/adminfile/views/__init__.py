@@ -6,3 +6,5 @@ from .category import *
 from .logo import *
 from .website import *
 from .order import *
+from .coupon import *
+from .review import *
