@@ -89,15 +89,15 @@
           <!-- List -->
           <ul class="nav nav-sm nav-tabs nav-vertical mb-4">
             <li class="nav-item">
-              <a class="nav-link " href="">
+              <a class="nav-link " href="{% url 'dashboard:admin:users-list' %}">
                 <i class="bi-person nav-icon"></i> لیست کاربران
               </a>
             </li>
-            <li class="nav-item">
+            {% comment %} <li class="nav-item">
               <a class="nav-link " href="">
                 <i class="bi-newspaper nav-icon"></i> خبرنامه
               </a>
-            </li>
+            </li> {% endcomment %}
 
           </ul>
 

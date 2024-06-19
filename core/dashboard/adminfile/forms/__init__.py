@@ -6,3 +6,4 @@ from .logo import *
 from .order import *
 from .coupon import *
 from .review import *
+from .users import *

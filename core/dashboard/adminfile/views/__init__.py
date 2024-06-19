@@ -9,3 +9,4 @@ from .order import *
 from .coupon import *
 from .review import *
 from .contact import *
+from .users import *
