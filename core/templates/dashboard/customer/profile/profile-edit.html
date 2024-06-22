@@ -27,7 +27,7 @@
             <div class="col-sm-9">
                 <!-- Media -->
 
-                <form action="{% url 'dashboard:customer:profile-image-edit' %}" method="post"
+                <form action="{% url 'dashboard:customer:image-edit' %}" method="post"
                     class="d-flex align-items-center" enctype="multipart/form-data">
                     {% csrf_token %}
                     <!-- Avatar -->
@@ -80,21 +80,21 @@
 
             <!-- Form -->
             <div class="row mb-4">
-                <label for="emailLabel" class="col-sm-3 col-form-label form-label">ایمیل</label>
+                <label for="emailLabel" class="col-sm-3 col-form-label form-label">تلفن</label>
 
                 <div class="col-sm-9">
-                    <input type="email" class="form-control text-center" value="{{request.user.email}}" disabled>
+                    <input type="email" class="form-control text-center" value="{{request.user.phone_number}}" disabled>
                 </div>
             </div>
             <!-- End Form -->
 
             <!-- Form -->
             <div class="row mb-4">
-                <label for="phoneLabel" class="col-sm-3 col-form-label form-label">تلفن</label>
+                <label for="phoneLabel" class="col-sm-3 col-form-label form-label"> ایمیل</label>
 
                 <div class="col-sm-9">
                     <div class="input-group">
-                        {{form.phone_number}}
+                        {{form.email}}
 
 
                     </div>

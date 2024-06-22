@@ -38,7 +38,7 @@
             <div class="row">
               <div class="col-sm-7 mb-3 mb-sm-0">
                 <h5><a class="text-dark"
-                    href="{% url 'shop_product:product-detail' slug=object.product.slug %}">{{object.product.title}}</a></h5>
+                    href="{% url 'shop:product-detail' slug=object.product.slug %}">{{object.product.title}}</a></h5>
 
                 <div class="d-grid gap-1">
 
@@ -46,7 +46,7 @@
                     <span class="small">دسته بندی:</span>
                     <span class="fw-semibold small">
                       {% for category in object.product.category.all %}
-                      <a class="link-sm link-secondary" href="#"> {{category.title}} </a>
+                      <a class="link-sm link-secondary" href="#"> {{category.name}} </a>
                       {% if not forloop.last %}
                       ,
                       {% endif %}
@@ -124,7 +124,7 @@
     {% endif %}
     <!-- End Pagination -->
   </div>
-  <a class="card-footer card-link text-center border-top" href="#">به خرید ادامه دهید</a>
+  <a class="card-footer card-link text-center border-top" href="{% url 'shop:products-grid' %}">به خرید ادامه دهید</a>
 </div>
 <!-- End Card -->
 {% endblock %}

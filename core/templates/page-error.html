@@ -1,0 +1,65 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fa" dir="" class="h-100">
+<head>
+  <!-- Required Meta Tags Always Come First -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Title -->
+  <title>خطای 404 | جلو - قالب چند منظوره پاسخگو</title>
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="./favicon.ico">
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- CSS Implementing Plugins -->
+  <link rel="stylesheet" href="{% static '/css/vendor.min.css' %}">
+  <link rel="stylesheet" href="{% static '/vendor/bootstrap-icons/font/bootstrap-icons.css' %}">
+
+  <!-- CSS Front Template -->
+  <link rel="stylesheet" href="{% static '/css/theme.min.css' %}?v=1.0">
+</head>
+
+<body class="d-flex flex-column justify-content-center align-items-center h-100">
+  <!-- ========== HEADER ========== -->
+  <header id="header" class="navbar navbar-expand navbar-light navbar-absolute-top">
+    <div class="container">
+      <nav class="navbar-nav-wrap">
+        <!-- Default Logo -->
+        <a class="navbar-brand" href="{% url 'website:index' %}" aria-label="Front">
+          <img class="navbar-brand-logo" src="{% static 'svg/logos/logo.svg' %}" alt="Logo">
+        </a>
+        <!-- End Default Logo -->
+      </nav>
+    </div>
+  </header>
+  <!-- ========== END HEADER ========== -->
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main id="content" role="main">
+    <!-- Content -->
+    <div class="container text-center">
+      <div class="mb-3">
+        <img class="img-fluid" src="{% static '/svg/illustrations/oc-error.svg' %}" alt="Image Description" style="width: 30rem;">
+      </div>
+
+      <div class="mb-4">
+        <p class="fs-4 mb-0">اوه! به نظر می رسد لینک بدی را دنبال کرده اید.</p>
+        <p class="fs-4">اگر فکر می کنید این مشکل با ماست، لطفا <a class="link" href="{% url 'website:contact' %}">به ما بگو</a>.</p>
+      </div>
+
+      <a class="btn btn-primary" href="{% url 'website:index' %}">به خانه برگرد</a>
+    </div>
+    <!-- End Content -->
+  </main>
+  <!-- ========== END MAIN CONTENT ========== -->
+
+
+  <!-- JS Front -->
+  <script src="{% static '/js/theme.min.js' %}"></script>
+</body>
+</html>

@@ -88,6 +88,7 @@ class Profile(models.Model):
 
 class UserAddressModel(models.Model):
     user = models.ForeignKey(CustomeUser,on_delete=models.CASCADE)
+    name = models.CharField(max_length=255,default='ادرس من')
     
     address = models.CharField(max_length=250)
     state = models.CharField(max_length=50)

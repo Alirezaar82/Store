@@ -51,8 +51,6 @@
                                 <div class="mb-2">
                                     <img class="avatar" src="{% static '/svg/logos/logo-short.svg' %}" alt="Logo">
                                 </div>
-
-                                <h1 class="h2 text-primary">Front Inc.</h1>
                             </div>
                             <!-- End Col -->
 
@@ -76,7 +74,7 @@
                             <div class="col-md text-md-end">
                                 <dl class="row">
                                     <dt class="col-sm-8">زمان سفارش:</dt>
-                                    <dd class="col-sm-4">{{object.created_date|date:"Y-m-d h:i"}}</dd>
+                                    <dd class="col-sm-4">{{object.datetime_created|date:"Y-m-d h:i"}}</dd>
                              
                                 </dl>
                             </div>
@@ -94,6 +92,7 @@
                                         <th>کالا</th>
                                         <th>تعداد</th>
                                         <th class="table-text-end">قیمت هر واحد</th>
+                                        <th class="table-text-end">قیمت کل محصول</th>
                                     </tr>
                                 </thead>
 
@@ -105,7 +104,8 @@
                                         <th>{{order_item.product.title}}</th>
                                         <td>{{order_item.quantity}}</td>
 
-                                        <td class="table-text-end formatted-price">{{order_item.price}}</td>
+                                        <td class="table-text-end formatted-price">{{order_item.single_price}}</td>
+                                        <td class="table-text-end formatted-price">{{order_item.total_price}}</td>
                                     </tr>
                                     {% endfor %}
 

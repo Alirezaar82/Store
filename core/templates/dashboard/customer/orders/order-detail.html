@@ -44,6 +44,7 @@
                 <th scope="col">نام محصول</th>
                 <th scope="col">تعداد سفارش</th>
                 <th scope="col">قیمت واحد محصول</th>
+                <th scope="col">قیمت کل محصول</th>
               </tr>
             </thead>
             <tbody>
@@ -58,7 +59,8 @@
                 <td>{{order_item.product.pk}}</td>
                 <td>{{order_item.product.title}}</td>
                 <td>{{order_item.quantity}}</td>
-                <td class="formatted-price">{{order_item.price}}</td>
+                <td class="formatted-price">{{order_item.single_price}}</td>
+                <td class="formatted-price">{{order_item.total_price}}</td>
               </tr>
               {% endfor %}
             </tbody>
@@ -81,10 +83,13 @@
         </div>
         <div class="row mb-3">
           <dt class="col-md-3"> تاریخ سفارش:</dt>
-          <dl class="col-md-3">{{object.created_date|date:"Y-m-d h:i"}}</dl>
+          <dl class="col-md-3">{{object.datetime_created|date:"Y-m-d h:i"}}</dl>
           <dt class="col-md-3">قیمت نهایی</dt>
           <dl class="col-md-3 formatted-price">{{object.total_price}}</dl>
- 
+        </div>
+        <div class="row mb-3">
+        <dt class="col-md-3">وضعیت مرسوله:</dt>
+        <dl class="col-md-3">{{object.get_shippinstatus.label}}</dl>
         </div>
         {% if object.coupon %}
         <div class="row mb-3">
